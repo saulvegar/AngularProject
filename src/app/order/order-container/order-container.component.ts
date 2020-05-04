@@ -20,9 +20,9 @@ export class OrderContainerComponent implements OnInit, AfterViewInit {
   @ViewChild('orderNumberCellTemplate') private orderNumberCellTemplate: TemplateRef<any>;
   numberOfRecords: number = 0;
   pageSizeOptions: number[] = [10, 20, 30];
-  pageSize = 10;
-  pageIndex = 0;
-  isVisible = false;
+  pageSize: number = 10;
+  pageIndex: number = 0;
+  isVisible: boolean = false;
 
   constructor(private service: OrderContainerService, private ref: ChangeDetectorRef) { }
 
@@ -37,10 +37,12 @@ export class OrderContainerComponent implements OnInit, AfterViewInit {
   }
 
   getOrders(page: number, rows: number) {
+    this.isVisible = true;
     this.service.getOrderList(page, rows)
       .subscribe(orders => {
         this.orders = orders;
         this.numberOfRecords = orders[0].totalRecords;
+        this.isVisible = false;
       });
   }
 

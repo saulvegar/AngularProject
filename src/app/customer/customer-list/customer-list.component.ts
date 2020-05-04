@@ -18,6 +18,7 @@ export class CustomerListComponent implements OnInit {
   pageSizeOptions: number[] = [10, 20, 30];
   pageSize: number = 10;
   pageIndex: number = 0;
+  isVisible: boolean = false;
 
   constructor(private customerService: CustomerService, public dialog: MatDialog) {
     this.getCustomers(1, this.pageSize);
@@ -27,10 +28,12 @@ export class CustomerListComponent implements OnInit {
   }
   
   getCustomers(page: number, rows: number): void {
+    this.isVisible = true;
     this.customerService.getCustomerList(page, rows)
       .subscribe(customers => {
         this.customers = customers;
         this.numberOfRecords = customers[0].totalRecords;
+        this.isVisible = false;
       });
   }
 
